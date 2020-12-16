@@ -53,9 +53,4 @@ def update(id, name, purchasePrice, salePrice):
 
 
 connect()
-# insert("club", 5, 2.5)
-# delete(7)
 
-update(5, "staff", 2, 4)
-print(view())
-print(search(name="sword"))
