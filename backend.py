@@ -10,6 +10,15 @@ def connect():
     conn.close()
 
 
+def sell_table():
+    conn = sqlite3.connect("pfitems.db")
+    cur = conn.cursor()
+    cur.execute("CREATE TABLE IF NOT EXISTS sell (id INTEGER PRIMARY KEY, name text, purchasePrice integer, "
+                "salePrice integer) ")
+    conn.commit()
+    conn.close()
+
+
 def insert(name, purchasePrice, salePrice):
     conn = sqlite3.connect("pfitems.db")
     cur = conn.cursor()
@@ -47,10 +56,28 @@ def delete(id):
 def update(id, name, purchasePrice, salePrice):
     conn = sqlite3.connect("pfitems.db")
     cur = conn.cursor()
-    cur.execute("UPDATE items SET name=?, purchasePrice=?, salePrice=? WHERE id=?", (name, purchasePrice, salePrice, id))
+    cur.execute("UPDATE items SET name=?, purchasePrice=?, salePrice=? WHERE id=?",
+                (name, purchasePrice, salePrice, id))
     conn.commit()
     conn.close()
 
 
-connect()
+def insert_sell(id, name, purchasePrice, salePrice):
+    conn = sqlite3.connect("pfitems.db")
+    cur = conn.cursor()
+    cur.execute("INSERT INTO sell VALUES (?, ?, ?, ?)", (id, name, purchasePrice, salePrice))
+    conn.commit()
+    conn.close()
 
+
+def view_sell():
+    conn = sqlite3.connect("pfitems.db")
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM sell")
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
+connect()
+sell_table()
