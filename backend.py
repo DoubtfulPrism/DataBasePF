@@ -81,10 +81,14 @@ def view_sell():
 def sell_total():
     conn = sqlite3.connect("pfitems.db")
     cur = conn.cursor()
-    cur.execute("SELECT SUM(mysum) FROM(SELECT SUM(salePrice) FROM sell)")
+    conn.create_function()
+    total_sql = "SELECT SUM(salePrice) FROM sell"
+    cur.execute(total_sql)
+    mysum = cur.fetchone()
     conn.close()
     return mysum
 
 
 connect()
 sell_table()
+
