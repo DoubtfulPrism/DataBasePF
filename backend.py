@@ -13,7 +13,7 @@ def connect():
 def sell_table():
     conn = sqlite3.connect("pfitems.db")
     cur = conn.cursor()
-    cur.execute("CREATE TABLE IF NOT EXISTS sell (id INTEGER PRIMARY KEY, name text, purchasePrice integer, "
+    cur.execute("CREATE TABLE IF NOT EXISTS sell (iq INTEGER PRIMARY KEY, id integer, name text, purchasePrice integer, "
                 "salePrice integer) ")
     conn.commit()
     conn.close()
@@ -65,7 +65,7 @@ def update(id, name, purchasePrice, salePrice):
 def insert_sell(id, name, purchasePrice, salePrice):
     conn = sqlite3.connect("pfitems.db")
     cur = conn.cursor()
-    cur.execute("INSERT INTO sell VALUES (?, ?, ?, ?)", (id, name, purchasePrice, salePrice))
+    cur.execute("INSERT INTO sell VALUES (NULL, ?, ?, ?, ?)", (id, name, purchasePrice, salePrice))
     conn.commit()
     conn.close()
 
@@ -77,6 +77,13 @@ def view_sell():
     rows = cur.fetchall()
     conn.close()
     return rows
+
+def sell_total():
+    conn = sqlite3.connect("pfitems.db")
+    cur = conn.cursor()
+    cur.execute("SELECT SUM(mysum) FROM(SELECT SUM(salePrice) FROM sell)")
+    conn.close()
+    return mysum
 
 
 connect()

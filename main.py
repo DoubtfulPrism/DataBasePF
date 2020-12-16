@@ -50,6 +50,8 @@ def add_list():
     for row in backend.view_sell():
         list2.insert(END, row)
 
+def total_command():
+    e4.insert(END, backend.sell_total)
 
 window = Tk()
 
@@ -121,10 +123,13 @@ b5.grid(row=6, column=3)
 b6 = Button(window, text="Add to list", width=12, command=add_list)
 b6.grid(row=7, column=3)
 
-b7 = Button(window, text="Sell Item", width=12)
+b7 = Button(window, text="Total", width=12, command=total_command)
 b7.grid(row=8, column=3)
 
-b8 = Button(window, text="Close", width=12, command=window.destroy)
+b8 = Button(window, text="Sell Item", width=12)
 b8.grid(row=9, column=3)
+
+b9 = Button(window, text="Close", width=12, command=window.destroy)
+b9.grid(row=10, column=3)
 
 window.mainloop()
