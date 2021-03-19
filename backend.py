@@ -18,6 +18,14 @@ def sell_table():
     conn.commit()
     conn.close()
 
+def selltotal_table():
+    conn = sqlite3.connect("pfitems.db")
+    cur = conn.cursor()
+    cur.execute(
+            "CREATE TABLE IF NOT EXISTS total (iq INTEGER PRIMARY KEY, id integer, total integer) ")
+    conn.commit()
+    conn.close()
+
 
 def insert(name, purchasePrice, salePrice):
     conn = sqlite3.connect("pfitems.db")
