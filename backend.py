@@ -1,10 +1,15 @@
 import sqlite3
+from sqlalchemy import Column, Integer, String, ForeignKey, Table
+from sqlalchemy.orm import relationship, backref
+from sqlalchemy.ext.declarative import declarative_base
 
+
+Base = declarative_base()
 
 def connect():
     conn = sqlite3.connect("pfitems.db")
     cur = conn.cursor()
-    cur.execute("CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY, name text, purchasePrice integer, "
+    cur.execute("CREATE TABLE IF NOT EXISTS items (itemid INTEGER PRIMARY KEY, name text, purchasePrice integer, "
                 "salePrice integer) ")
     conn.commit()
     conn.close()
@@ -13,16 +18,18 @@ def connect():
 def sell_table():
     conn = sqlite3.connect("pfitems.db")
     cur = conn.cursor()
-    cur.execute("CREATE TABLE IF NOT EXISTS sell (iq INTEGER PRIMARY KEY, id integer, name text, purchasePrice integer, "
-                "salePrice integer) ")
+    cur.execute(
+        "CREATE TABLE IF NOT EXISTS sell (saleid INTEGER PRIMARY KEY, itemid integer, name text, purchasePrice integer, "
+        "salePrice integer) ")
     conn.commit()
     conn.close()
 
-def selltotal_table():
+
+def total_table():
     conn = sqlite3.connect("pfitems.db")
     cur = conn.cursor()
     cur.execute(
-            "CREATE TABLE IF NOT EXISTS total (iq INTEGER PRIMARY KEY, id integer, total integer) ")
+        "CREATE TABLE IF NOT EXISTS total (iq INTEGER PRIMARY KEY, id integer, total integer) ")
     conn.commit()
     conn.close()
 
@@ -86,17 +93,24 @@ def view_sell():
     conn.close()
     return rows
 
+
 def sell_total():
     conn = sqlite3.connect("pfitems.db")
     cur = conn.cursor()
     conn.create_function()
-    total_sql = "SELECT SUM(salePrice) FROM sell"
-    cur.execute(total_sql)
-    mysum = cur.fetchone()
+    totals = "SELECT SUM(salePrice) FROM sell"
+    total_sql = int(totals)
     conn.close()
-    return mysum
+    return total_sql
+
+
+def total(total_sql):
+    conn = sqlite3.connect("pfitems.db")
+    cur = conn.cursor()
+    cur.execute("INSERT INTO total VALUES (NULL,total_sql ), (id, total)")
+    conn.close()
 
 
 connect()
 sell_table()
-
+total_table()
