@@ -6,32 +6,32 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-def connect():
-    conn = sqlite3.connect("pfitems.db")
-    cur = conn.cursor()
-    cur.execute("CREATE TABLE IF NOT EXISTS items (itemid INTEGER PRIMARY KEY, name text, purchasePrice integer, "
-                "salePrice integer) ")
-    conn.commit()
-    conn.close()
+#def connect():
+#    conn = sqlite3.connect("pfitems.db")
+#   cur = conn.cursor()
+#    cur.execute("CREATE TABLE IF NOT EXISTS items (itemid INTEGER PRIMARY KEY, name text, purchasePrice integer, "
+#                "salePrice integer) ")
+#    conn.commit()
+#    conn.close()
 
 
-def sell_table():
-    conn = sqlite3.connect("pfitems.db")
-    cur = conn.cursor()
-    cur.execute(
-        "CREATE TABLE IF NOT EXISTS sell (saleid INTEGER PRIMARY KEY, itemid integer, name text, purchasePrice integer, "
-        "salePrice integer) ")
-    conn.commit()
-    conn.close()
+#def sell_table():
+#    conn = sqlite3.connect("pfitems.db")
+#    cur = conn.cursor()
+#    cur.execute(
+#        "CREATE TABLE IF NOT EXISTS sell (saleid INTEGER PRIMARY KEY, itemid integer, name text, purchasePrice integer, "
+#        "salePrice integer) ")
+#    conn.commit()
+#    conn.close()
 
 
-def total_table():
-    conn = sqlite3.connect("pfitems.db")
-    cur = conn.cursor()
-    cur.execute(
-        "CREATE TABLE IF NOT EXISTS total (iq INTEGER PRIMARY KEY, id integer, total integer) ")
-    conn.commit()
-    conn.close()
+#def total_table():
+#    conn = sqlite3.connect("pfitems.db")
+#    cur = conn.cursor()
+#    cur.execute(
+#        "CREATE TABLE IF NOT EXISTS total (iq INTEGER PRIMARY KEY, id integer, total integer) ")
+#    conn.commit()
+#    conn.close()
 
 
 def insert(name, purchasePrice, salePrice):
@@ -111,6 +111,6 @@ def total(total_sql):
     conn.close()
 
 
-connect()
-sell_table()
-total_table()
+#connect()
+#sell_table()
+#total_table()
