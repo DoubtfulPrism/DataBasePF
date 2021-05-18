@@ -18,7 +18,6 @@ sale_header = Table(
     Column("headerid", Integer, ForeignKey("total_table.headerid"))
 )
 
-
 class Items(Base):
     __tablename__ = "item"
     itemid = Column(Integer, primary_key=True)
@@ -103,27 +102,27 @@ def search(name=""):
     return rows
 
 
-def delete(id):
+def delete(itemid):
     conn = sqlite3.connect("pfitems.db")
     cur = conn.cursor()
-    cur.execute("DELETE FROM item WHERE id=?", (id,))
+    cur.execute("DELETE FROM item WHERE itemid=?", (id,))
     conn.commit()
     conn.close()
 
 
-def update(id, name, purchasePrice, salePrice):
+def update(itemid, name, purchasePrice, salePrice):
     conn = sqlite3.connect("pfitems.db")
     cur = conn.cursor()
-    cur.execute("UPDATE item SET name=?, purchasePrice=?, salePrice=? WHERE id=?",
+    cur.execute("UPDATE item SET name=?, purchasePrice=?, salePrice=? WHERE itemid=?",
                 (name, purchasePrice, salePrice, id))
     conn.commit()
     conn.close()
 
 
-def insert_sell(id, name, purchasePrice, salePrice):
+def insert_sell(itemid, name, purchasePrice, salePrice):
     conn = sqlite3.connect("pfitems.db")
     cur = conn.cursor()
-    cur.execute("INSERT INTO sell VALUES (NULL, ?, ?, ?, ?)", (id, name, purchasePrice, salePrice))
+    cur.execute("INSERT INTO sell VALUES (NULL, ?, ?, ?, ?)", (itemid, name, purchasePrice, salePrice))
     conn.commit()
     conn.close()
 
@@ -140,17 +139,18 @@ def view_sell():
 def sell_total():
     conn = sqlite3.connect("pfitems.db")
     cur = conn.cursor()
-    conn.create_function()
-    totals = "SELECT SUM(salePrice) FROM sell"
-    total_sql = int(totals)
+    cur.execute("SELECT total from total")
+    row = cur.fetchone()
+    value = row["total"]
     conn.close()
-    return total_sql
+    return value
 
 
-def total(total_sql):
+def total():
     conn = sqlite3.connect("pfitems.db")
     cur = conn.cursor()
-    cur.execute("INSERT INTO total VALUES (NULL,total_sql ), (id, total)")
+    cur.execute("insert into total(total) select sum(salePrice) from sell")
+    conn.commit()
     conn.close()
 
 
